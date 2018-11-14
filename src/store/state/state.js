@@ -1,4 +1,5 @@
 export default {
-  count: 0,
-  price: 100
+  count: 25,
+  price: 10000,
+  testMsg: 'this is test'
 }

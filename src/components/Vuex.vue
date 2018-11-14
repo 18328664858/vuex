@@ -3,6 +3,10 @@
     {{getPrice}}
     {{count}}
     {{getPrice}}
+
+    <p>modules</p>
+    <p>{{getMsg}} {{modA}} {{getModA}}</p>
+    <p>{{modC}}</p>
   </div>
 </template>
 
@@ -22,13 +26,25 @@
     },
     methods: {
       ...mapActions(['updateCountAsync']),
-      ...mapMutations(['updateCount'])
+      ...mapMutations(['updateCount']),
+
+      //modules
+      // ...mapMutations(["showMsg"]),
+      ...mapMutations(["modA/showMsg"]),
+      ...mapActions(['modA/updateMsg','modB/BUpdateMsg'])
     },
     mounted() {
       //this.$store.dispatch('updateCountAsync',{count: 25})
       this.updateCountAsync({
         count: 35
       })
+
+      //modules
+      // this.showMsg('modA')
+      this['modA/showMsg']('modA')
+      this['modA/updateMsg']()
+
+      this['modB/BUpdateMsg']()
     },
     computed: {
       // ...mapState({counts: 'count'}),
@@ -41,6 +57,17 @@
       //   console.log(this.$store.getters.getPrice)
       //   return this.$store.getters.getPrice
       // }
+      //modules
+      getMsg() {
+        return this.$store.state.modA.msg
+      },
+      ...mapState({
+        modA:(state) => state.modA.msg,
+        modC: state => state.modC.msg
+      }),
+      ...mapGetters({
+        getModA: 'modA/getModA'
+      })
     }
   }
 </script>
